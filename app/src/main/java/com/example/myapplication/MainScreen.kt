@@ -67,7 +67,11 @@ fun MainScreen(navController: NavController){
         }
         Spacer(modifier = Modifier.size(10.dp))
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate("signup"){
+                    popUpTo("mainscreen")
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .height(60.dp),

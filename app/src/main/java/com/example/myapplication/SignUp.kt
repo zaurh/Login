@@ -31,11 +31,13 @@ import androidx.navigation.NavController
 
 
 @Composable
-fun Login(navController: NavController){
+fun SignUp(navController: NavController){
     var passwordVisible by remember { mutableStateOf(false) }
+    var passwordconfirmVisible by remember { mutableStateOf(false) }
 
     val emailtf = remember { mutableStateOf("") }
     val passwordtf = remember { mutableStateOf("") }
+    val passwordconfirmtf = remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -51,8 +53,8 @@ fun Login(navController: NavController){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = "Welcome,", fontSize = 30.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
-        Text(text = "Glad to see you!", fontSize = 30.sp, color = Color.White)
+        Text(text = "Create Account", fontSize = 30.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
+        Text(text = "to get started now!", fontSize = 30.sp, color = Color.White)
         Spacer(modifier = Modifier.size(30.dp))
         OutlinedTextField(
             modifier = Modifier
@@ -97,21 +99,33 @@ fun Login(navController: NavController){
 
 
         )
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(
+        Spacer(modifier = Modifier.size(10.dp))
+        OutlinedTextField(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(30.dp)
-                .padding(0.dp, 0.dp, 30.dp, 0.dp),
-            horizontalArrangement = Arrangement.End,
-            ) {
-            Text(modifier = Modifier.clickable {
+                .fillMaxWidth(0.85f),
+            value = passwordconfirmtf.value,
+            onValueChange = {passwordconfirmtf.value = it},
+            label = { Text(text = "Confirm Password", color = Color.White, modifier = Modifier.padding(0.dp, 5.dp, 0.dp, 25.dp))},
+            shape = RoundedCornerShape(15.dp),
+            visualTransformation = if (passwordconfirmVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                if (passwordconfirmVisible)
+                    Icon(painter = painterResource(id = R.drawable.password_eye_hidden), contentDescription = "", tint = Color.White)
+                else Icon(painter = painterResource(id = R.drawable.password_eye), contentDescription = "")
 
+                IconButton(onClick = {passwordconfirmVisible = !passwordconfirmVisible}){
+                    Icon(painter = painterResource(id = R.drawable.password_eye), contentDescription = "", tint = Color.White)
+                }
             },
-                text = "Forgot Password?",
-                color = Color.White,
-                style = TextStyle(textDecoration = TextDecoration.Underline))
-        }
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color.White,
+                unfocusedBorderColor = Color.White,
+                backgroundColor = colorResource(id = R.color.outlinedTextField),
+                textColor = Color.White
+            )
+
+
+        )
         Spacer(modifier = Modifier.size(20.dp))
         OutlinedButton(
             onClick = { /*TODO*/ },
@@ -123,9 +137,9 @@ fun Login(navController: NavController){
 
             )
         {
-            Text(text = "Login", color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+            Text(text = "Sign Up", color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
         }
-        
+
         Spacer(modifier = Modifier.size(80.dp))
         Row(modifier = Modifier
             .fillMaxWidth()
@@ -133,7 +147,7 @@ fun Login(navController: NavController){
         {
             Text(text = "─────────", color = Color.White)
             Spacer(modifier = Modifier.size(15.dp))
-            Text(text = "Or Login with", color = Color.White)
+            Text(text = "Or Sign Up with", color = Color.White)
             Spacer(modifier = Modifier.size(15.dp))
             Text(text = "─────────", color = Color.White)
         }
@@ -167,14 +181,14 @@ fun Login(navController: NavController){
         }
         Spacer(modifier = Modifier.size(40.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(text = "Don't have an account?", color = Color.White)
+            Text(text = "Already have an account?", color = Color.White)
             Spacer(modifier = Modifier.size(5.dp))
             Text(modifier = Modifier.clickable {
-                navController.navigate("signup"){
-                    popUpTo("login"){inclusive = true}
+                navController.navigate("login"){
+                    popUpTo("signup"){inclusive = true}
                 }
             },
-                text = "Sign Up Now",
+                text = "Login Now",
                 color = Color.White,
                 textDecoration = TextDecoration.Underline
             )

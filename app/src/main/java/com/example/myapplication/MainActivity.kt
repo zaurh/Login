@@ -41,7 +41,10 @@ fun Navigation() {
             MainScreen(navController = navController)
         }
         composable("login"){
-            Login()
+            Login(navController = navController)
+        }
+        composable("signup"){
+            SignUp(navController = navController)
         }
     }
 }
