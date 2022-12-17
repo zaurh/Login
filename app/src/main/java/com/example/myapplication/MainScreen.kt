@@ -25,10 +25,11 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.myapplication.ui.theme.Shapes
 
 @Composable
-fun MainScreen(){
+fun MainScreen(navController: NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,7 +50,11 @@ fun MainScreen(){
             contentDescription = "")
         Spacer(modifier = Modifier.size(20.dp))
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate("login"){
+                    popUpTo("mainscreen")
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .height(60.dp)
